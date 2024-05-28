@@ -1,0 +1,78 @@
+.settings-container {
+    background: #ececec;
+    border: 5px solid #d3d3d3;
+    border-radius: 10px;
+    font-size: 16pt;
+    max-height: 65vh;
+    width: 50vw;
+    margin: auto;
+    overflow-y: scroll;
+    padding: 1em 1.5em;
+    text-align: center;
+}
+  
+.settings-section {
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    border-bottom: solid 1px #a1a1a1;
+}
+  
+.settings-section-header {
+    font-size: 18pt;
+    margin-bottom: 10px;
+}
+  
+.settings-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.settings-group label {
+    flex: 0 0 calc(50% - 10px);
+    margin: 5px;
+}
+
+#keyword-input,
+.settings-group label input,
+.settings-group label select,
+.settings-group label textarea {
+    border: 2px solid #ccc !important;
+    box-sizing: border-box !important;
+    padding: 5px !important;
+    width: 100% !important;
+    max-width: 200px !important;
+    margin: 0.75em auto 0.4em;
+    height: 2.5em;
+}
+
+#keyword-input {
+    margin-left: 0.5em !important;
+}
+
+.settings-top-btn {
+    background-color: #ffa550;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,.1);
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    margin: .5em;
+    padding: .5em 1em;
+    text-align: center;
+    text-decoration: none;
+    font-size: small;
+}
+
+.settings-top-btn:hover {
+    background-color: #ff8a00;
+}
+
+.system-btn {
+    background-color: crimson;
+}
+
+.system-btn:hover {
+    background-color: #ff0000;
+}
