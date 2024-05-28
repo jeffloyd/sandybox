@@ -809,9 +809,3 @@ chmod +x setup.sh
 </table>
 
 ---
-
-## 🤝 Contributing
-Contributions are certainly welcome! Please read the [contributing guidelines](CONTRIBUTING.md) for more information on how to contribute.
-
-## 📜 License
-This project is licensed under the GNU GPL v3.0 License - see the [LICENSE](LICENSE) file for details.
