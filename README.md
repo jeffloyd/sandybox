@@ -1,17 +1,7 @@
-# 🏠 GPT Home 🤖💬
+# 🏠 Sandybox 🤖💬
 
-![Ubuntu Server Version](https://img.shields.io/badge/Ubuntu_Server-v23.04-orange?style=flat-square&logo=ubuntu)
-![Raspberry Pi Version](https://img.shields.io/badge/Raspberry_Pi-4B-red?style=flat-square&logo=raspberry-pi)
-![Python Version](https://img.shields.io/badge/Python-v3.11-blue?style=flat-square&logo=python)
-![Node.js Version](https://img.shields.io/badge/Node.js-v18.17.1-green?style=flat-square&logo=node.js)
-[![Release](https://img.shields.io/github/v/release/judahpaul16/gpt-home?style=flat-square)](https://github.com/judahpaul16/gpt-home/tags)
-[![Docker Pulls](https://img.shields.io/docker/pulls/judahpaul/gpt-home?style=flat-square)](https://hub.docker.com/r/judahpaul/gpt-home)
+Sandy at Home. Built on the Raspberry Pi using the OpenAI API.
 
-ChatGPT at home! Basically a better Google Nest Hub or Amazon Alexa home assistant. Built on the Raspberry Pi using the OpenAI API.
-
-![My Build](screenshots/my_build.jpg)
-
-This guide will explain how to build your own. It's pretty straight forward. You can also use this as a reference for building other projects on the Raspberry Pi.
 
 * *Theoretically, the app should run on any linux system thanks to docker, but I can only vouch for the versions listed in the [compatibility table](#-compatibility). You should be able use any plug-and-play USB/3.5mm speaker or microphone as long as it's supported by [ALSA](https://www.alsa-project.org) or [PortAudio](http://www.portaudio.com/docs/v19-doxydocs/index.html).*
 
@@ -84,7 +74,7 @@ echo "export OPENAI_API_KEY='your_openai_api_key_here'" >> ~/.bashrc && source ~
 ```
 2. Run the setup script with the `--no-build` flag to pull the latest image from DockerHub:
 ```bash
-curl -s https://raw.githubusercontent.com/judahpaul16/gpt-home/main/contrib/setup.sh | \
+curl -s https://raw.githubusercontent.com/jeffloyd/sandybox/main/contrib/setup.sh | \
     bash -s -- --no-build
 ```
 
@@ -106,7 +96,7 @@ Before connecting the battery, ensure that the polarity is correct to avoid dama
 ---
 
 ## 🛠 My Parts List
-This is the list of parts I used to build my first GPT Home. You can use this as a reference for building your own. I've also included optional parts that you can add to enhance your setup. ***To be clear you can use any system that runs Linux.***
+This is the list of parts I used to build my first Sandybox. You can use this as a reference for building your own. I've also included optional parts that you can add to enhance your setup. ***To be clear you can use any system that runs Linux.***
 
 <details>
 <summary>👈 View My Parts List</summary>
@@ -365,46 +355,46 @@ Alternatively, you can put this at the end of your `~/.bashrc` file. (recommende
 export OPENAI_API_KEY="your_openai_api_key_here"
 
 # Optional: Add these aliases to your .bashrc file for easier management
-alias gpt-start="docker exec -it gpt-home supervisorctl start app"
-alias gpt-restart="docker exec -it gpt-home supervisorctl restart app"
-alias gpt-stop="docker exec -it gpt-home supervisorctl stop app"
-alias gpt-status="docker exec -it gpt-home supervisorctl status app"
-alias gpt-log="docker exec -it gpt-home tail -n 100 -f /app/src/events.log"
+alias sandy-start="docker exec -it sandybox supervisorctl start app"
+alias sandy-restart="docker exec -it sandybox supervisorctl restart app"
+alias sandy-stop="docker exec -it sandybox supervisorctl stop app"
+alias sandy-status="docker exec -it sandybox supervisorctl status app"
+alias sandy-log="docker exec -it sandybox tail -n 100 -f /app/src/events.log"
 
-alias wi-start="docker exec -it gpt-home supervisorctl start web-interface"
-alias wi-restart="docker exec -it gpt-home supervisorctl restart web-interface && sudo systemctl restart nginx"
-alias wi-stop="docker exec -it gpt-home supervisorctl stop web-interface"
-alias wi-status="docker exec -it gpt-home supervisorctl status web-interface"
-alias wi-build="docker exec -it gpt-home bash -c 'cd /app/src/frontend && npm run build'"
+alias wi-start="docker exec -it sandybox supervisorctl start web-interface"
+alias wi-restart="docker exec -it sandybox supervisorctl restart web-interface && sudo systemctl restart nginx"
+alias wi-stop="docker exec -it sandybox supervisorctl stop web-interface"
+alias wi-status="docker exec -it sandybox supervisorctl status web-interface"
+alias wi-build="docker exec -it sandybox bash -c 'cd /app/src/frontend && npm run build'"
 alias wi-log="tail -n 100 -f /var/log/nginx/access.log"
 alias wi-error="tail -n 100 -f /var/log/nginx/error.log"
 
-alias spotifyd-start="docker exec -it gpt-home supervisorctl start spotifyd"
-alias spotifyd-restart="docker exec -it gpt-home supervisorctl restart spotifyd"
-alias spotifyd-stop="docker exec -it gpt-home supervisorctl stop spotifyd"
-alias spotifyd-status="docker exec -it gpt-home supervisorctl status spotifyd"
-alias spotifyd-log="docker exec -it gpt-home tail -n 100 -f /var/log/spotifyd.log"
+alias spotifyd-start="docker exec -it sandybox supervisorctl start spotifyd"
+alias spotifyd-restart="docker exec -it sandybox supervisorctl restart spotifyd"
+alias spotifyd-stop="docker exec -it sandybox supervisorctl stop spotifyd"
+alias spotifyd-status="docker exec -it sandybox supervisorctl status spotifyd"
+alias spotifyd-log="docker exec -it sandybox tail -n 100 -f /var/log/spotifyd.log"
 ```
 Run `source ~/.bashrc` to apply the changes to your current terminal session.
 
 The setup script will take quite a while to run ***(900.0s+ to build and setup dependencies on my quad-core Raspberry Pi 4B w/ 1G RAM)***. It will install all the dependencies and build the Docker container. However, you can skip the build process by passing the `--no-build` flag to the script; it will install the dependencies, set up the firewall and NGINX, and pull the container from Docker Hub and run it.
 
 ```bash
-curl -s https://raw.githubusercontent.com/judahpaul16/gpt-home/main/contrib/setup.sh | \
+curl -s https://raw.githubusercontent.com/judahpaul16/sandybox/main/contrib/setup.sh | \
     bash -s -- --no-build
 ```
 
-**Alternatively, for development purposes, running `setup.sh` without the `--no-build` flag mounts the project directory to the container by adding `-v ~/gpt-home:/app` to the `docker run` command. This allows you to make changes to the project files on your Raspberry Pi and see the changes reflected in the container without rebuilding the image. This is useful for testing changes to the codebase. Run directly with:**
+**Alternatively, for development purposes, running `setup.sh` without the `--no-build` flag mounts the project directory to the container by adding `-v ~/sandybox:/app` to the `docker run` command. This allows you to make changes to the project files on your Raspberry Pi and see the changes reflected in the container without rebuilding the image. This is useful for testing changes to the codebase. Run directly with:**
 
 ```bash
-curl -s https://raw.githubusercontent.com/judahpaul16/gpt-home/main/contrib/setup.sh | \
+curl -s https://raw.githubusercontent.com/judahpaul16/sandybox/main/contrib/setup.sh | \
     bash -s
 ```
 
 You can also run the container interactively if you need to debug or test changes to the codebase with the `-it` (interactive terminal), `--entrypoint /bin/bash`, and `--rm` (remove on process exit) flags. This will drop you into a shell session inside the container. Alternatively, if the conatiner is already running:
 
 ```bash
-docker exec -it gpt-home bash
+docker exec -it sandybox bash
 ```
 
 This will start the container and drop you into a shell session inside the container.
@@ -443,7 +433,7 @@ If you prefer to run the setup script manually, you can do so. Create a script i
 ```bash
 #!/bin/bash
 
-latest_release=$(curl -s https://api.github.com/repos/judahpaul16/gpt-home/releases/latest | grep 'tag_name' | cut -d\" -f4)
+latest_release=$(curl -s https://api.github.com/repos/judahpaul16/sandybox/releases/latest | grep 'tag_name' | cut -d\" -f4)
 
 # Colors
 RED='\033[0;31m'
@@ -457,9 +447,9 @@ NC='\033[0m' # No Color
 
 echo ""
 echo -e "${MAGENTA}"
-echo "GPT Home $latest_release"
+echo "Sandybox $latest_release"
 echo "Created by Judah Paul"
-echo "More info @ https://github.com/judahpaul16/gpt-home/"
+echo "More info @ https://github.com/judahpaul16/sandybox/"
 echo -e "${NC}"
 
 echo -e "${GREEN}"
@@ -593,7 +583,7 @@ echo "y" | sudo ufw enable
 # Setup NGINX for reverse proxy
 echo "Setting up NGINX..."
 sudo mkdir -p /etc/nginx/sites-available /etc/nginx/sites-enabled
-sudo tee /etc/nginx/sites-available/gpt-home <<EOF
+sudo tee /etc/nginx/sites-available/sandybox <<EOF
 server {
     listen 80;
     location / {
@@ -605,33 +595,33 @@ server {
 }
 EOF
 
-# Remove gpt-home site symlink if it exists
-[ -L "/etc/nginx/sites-enabled/gpt-home" ] && sudo unlink /etc/nginx/sites-enabled/gpt-home
+# Remove sandybox site symlink if it exists
+[ -L "/etc/nginx/sites-enabled/sandybox" ] && sudo unlink /etc/nginx/sites-enabled/sandybox
 
 # Remove the default site if it exists
 [ -L "/etc/nginx/sites-enabled/default" ] && sudo unlink /etc/nginx/sites-enabled/default
 
-# Create a symlink to the gpt-home site and reload NGINX
-sudo ln -s /etc/nginx/sites-available/gpt-home /etc/nginx/sites-enabled
+# Create a symlink to the sandybox site and reload NGINX
+sudo ln -s /etc/nginx/sites-available/sandybox /etc/nginx/sites-enabled
 sudo systemctl enable nginx
 sudo nginx -t && sudo systemctl restart nginx
 
 sudo systemctl status --no-pager nginx
 
 if [[ "$1" != "--no-build" ]]; then
-    [ -d ~/gpt-home ] && rm -rf ~/gpt-home
-    git clone https://github.com/judahpaul16/gpt-home ~/gpt-home
-    cd ~/gpt-home
-    echo "Checking if the container 'gpt-home' is already running..."
-    if [ $(docker ps -q -f name=gpt-home) ]; then
-        echo "Stopping running container 'gpt-home'..."
-        docker stop gpt-home
+    [ -d ~/sandybox ] && rm -rf ~/sandybox
+    git clone https://github.com/judahpaul16/sandybox ~/sandybox
+    cd ~/sandybox
+    echo "Checking if the container 'sandybox' is already running..."
+    if [ $(docker ps -q -f name=sandybox) ]; then
+        echo "Stopping running container 'sandybox'..."
+        docker stop sandybox
     fi
 
-    echo "Checking for existing container 'gpt-home'..."
-    if [ $(docker ps -aq -f status=exited -f name=gpt-home) ]; then
-        echo "Removing existing container 'gpt-home'..."
-        docker rm -f gpt-home
+    echo "Checking for existing container 'sandybox'..."
+    if [ $(docker ps -aq -f status=exited -f name=sandybox) ]; then
+        echo "Removing existing container 'sandybox'..."
+        docker rm -f sandybox
     fi
 
     echo "Pruning Docker system..."
@@ -643,47 +633,47 @@ if [[ "$1" != "--no-build" ]]; then
         docker buildx inspect --bootstrap
     fi
 
-    # Building Docker image 'gpt-home' for ARMhf architecture
-    echo "Building Docker image 'gpt-home' for ARMhf..."
-    timeout 3600 docker buildx build --platform linux/arm64 -t gpt-home --load .
+    # Building Docker image 'sandybox' for ARMhf architecture
+    echo "Building Docker image 'sandybox' for ARMhf..."
+    timeout 3600 docker buildx build --platform linux/arm64 -t sandybox --load .
 
     if [ $? -ne 0 ]; then
         echo "Docker build failed. Exiting..."
         exit 1
     fi
 
-    echo "Container 'gpt-home' is now ready to run."
+    echo "Container 'sandybox' is now ready to run."
 
-    echo "Running container 'gpt-home' from image 'gpt-home'..."
-    docker run --restart unless-stopped -d --name gpt-home \
+    echo "Running container 'sandybox' from image 'sandybox'..."
+    docker run --restart unless-stopped -d --name sandybox \
         --mount type=bind,source=/etc/asound.conf,target=/etc/asound.conf \
         --privileged \
         --net=host \
         --tmpfs /run \
         --tmpfs /run/lock \
-        -v ~/gpt-home:/app \
+        -v ~/sandybox:/app \
         -v /dev/snd:/dev/snd \
         -v /dev/shm:/dev/shm \
         -v /usr/share/alsa:/usr/share/alsa \
         -v /var/run/dbus:/var/run/dbus \
         -e OPENAI_API_KEY=$OPENAI_API_KEY \
-        gpt-home
+        sandybox
 
-    echo "Container 'gpt-home' is now running."
+    echo "Container 'sandybox' is now running."
 
     # Show status of the container
-    docker ps -a | grep gpt-home
+    docker ps -a | grep sandybox
 
     sleep 10
 
     # Show status of all programs managed by Supervisor
-    docker exec -i gpt-home supervisorctl status
+    docker exec -i sandybox supervisorctl status
 fi
 
 if [[ "$1" == "--no-build" ]]; then
-    docker ps -aq -f name=gpt-home | xargs -r docker rm -f
-    docker pull judahpaul/gpt-home
-    docker run --restart unless-stopped -d --name gpt-home \
+    docker ps -aq -f name=sandybox | xargs -r docker rm -f
+    docker pull judahpaul/sandybox
+    docker run --restart unless-stopped -d --name sandybox \
         --mount type=bind,source=/etc/asound.conf,target=/etc/asound.conf \
         --privileged \
         --net=host \
@@ -694,10 +684,10 @@ if [[ "$1" == "--no-build" ]]; then
         -v /usr/share/alsa:/usr/share/alsa \
         -v /var/run/dbus:/var/run/dbus \
         -e OPENAI_API_KEY=$OPENAI_API_KEY \
-        judahpaul/gpt-home
-    docker ps -a | grep gpt-home
+        judahpaul/sandybox
+    docker ps -a | grep sandybox
     sleep 10
-    docker exec -i gpt-home supervisorctl status
+    docker exec -i sandybox supervisorctl status
 fi
 ```
 

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# latest_release=$(curl -s https://api.github.com/repos/judahpaul16/gpt-home/releases/latest | grep 'tag_name' | cut -d\" -f4)
-
 # Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
