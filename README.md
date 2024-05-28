@@ -380,14 +380,14 @@ Run `source ~/.bashrc` to apply the changes to your current terminal session.
 The setup script will take quite a while to run ***(900.0s+ to build and setup dependencies on my quad-core Raspberry Pi 4B w/ 1G RAM)***. It will install all the dependencies and build the Docker container. However, you can skip the build process by passing the `--no-build` flag to the script; it will install the dependencies, set up the firewall and NGINX, and pull the container from Docker Hub and run it.
 
 ```bash
-curl -s https://raw.githubusercontent.com/judahpaul16/sandybox/main/contrib/setup.sh | \
+curl -s https://raw.githubusercontent.com/jeffloyd/sandybox/main/contrib/setup.sh | \
     bash -s -- --no-build
 ```
 
 **Alternatively, for development purposes, running `setup.sh` without the `--no-build` flag mounts the project directory to the container by adding `-v ~/sandybox:/app` to the `docker run` command. This allows you to make changes to the project files on your Raspberry Pi and see the changes reflected in the container without rebuilding the image. This is useful for testing changes to the codebase. Run directly with:**
 
 ```bash
-curl -s https://raw.githubusercontent.com/judahpaul16/sandybox/main/contrib/setup.sh | \
+curl -s https://raw.githubusercontent.com/jeffloyd/sandybox/main/contrib/setup.sh | \
     bash -s
 ```
 
@@ -433,7 +433,7 @@ If you prefer to run the setup script manually, you can do so. Create a script i
 ```bash
 #!/bin/bash
 
-latest_release=$(curl -s https://api.github.com/repos/judahpaul16/sandybox/releases/latest | grep 'tag_name' | cut -d\" -f4)
+latest_release=$(curl -s https://api.github.com/repos/jeffloyd/sandybox/releases/latest | grep 'tag_name' | cut -d\" -f4)
 
 # Colors
 RED='\033[0;31m'
@@ -449,7 +449,7 @@ echo ""
 echo -e "${MAGENTA}"
 echo "Sandybox $latest_release"
 echo "Created by Judah Paul"
-echo "More info @ https://github.com/judahpaul16/sandybox/"
+echo "More info @ https://github.com/jeffloyd/sandybox/"
 echo -e "${NC}"
 
 echo -e "${GREEN}"
@@ -610,7 +610,7 @@ sudo systemctl status --no-pager nginx
 
 if [[ "$1" != "--no-build" ]]; then
     [ -d ~/sandybox ] && rm -rf ~/sandybox
-    git clone https://github.com/judahpaul16/sandybox ~/sandybox
+    git clone https://github.com/jeffloyd/sandybox ~/sandybox
     cd ~/sandybox
     echo "Checking if the container 'sandybox' is already running..."
     if [ $(docker ps -q -f name=sandybox) ]; then
